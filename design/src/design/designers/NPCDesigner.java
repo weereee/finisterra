@@ -34,7 +34,7 @@ public class NPCDesigner implements IDesigner<NPC, NPCParameters> {
     }
 
     private int getFreeId() {
-        return npcs.keySet().stream().max(Integer::compareTo).get() + 1;
+        return npcs.keySet().stream().max(Integer::compareTo).orElse(0) + 1;
     }
 
     @Override

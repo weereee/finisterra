@@ -58,8 +58,10 @@ public class ObjectView extends View<Obj, ObjectDesigner> {
             int index = obj.getGrhIndex();
             ImageView screen = (ImageView) ScreenEnum.IMAGE_VIEW.getScreen();
             ImageDesigner designer = screen.getDesigner();
-            AOImage aoImage = designer.get(index).orElse(new AOImage());
-            content.add(new AOImageActor(aoImage, getAnimationHandler()));
+            if (index > 0) {
+                AOImage aoImage = designer.get(index).orElse(new AOImage());
+                content.add(new AOImageActor(aoImage, getAnimationHandler()));
+            }
         }
 
         @Override

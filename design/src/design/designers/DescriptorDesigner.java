@@ -130,7 +130,7 @@ public class DescriptorDesigner<T extends Descriptor> implements IDesigner<T, ID
     }
 
     private int getFreeId() {
-        return descriptors.values().stream().max(Comparator.comparingInt(Descriptor::getId)).get().getId() + 1;
+        return descriptors.values().stream().max(Comparator.comparingInt(Descriptor::getId)).map(Descriptor::getId).orElse(0) + 1;
     }
 
     @Override

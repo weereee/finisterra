@@ -66,7 +66,7 @@ public class TiledMapSystem extends IteratingSystem {
             MapHandler.get(map.getNeighbour(MapHelper.Dir.UP));
             MapHandler.get(map.getNeighbour(MapHelper.Dir.DOWN));
 
-        });
+        }).setDaemon(true);
     }
 
     @Override

@@ -44,8 +44,8 @@ public class ImageDesigner implements IDesigner<AOImage, ImageParameters> {
 
     public int getFreeId() {
         AnimationDesigner designer = (AnimationDesigner) ScreenEnum.ANIMATION_VIEW.getScreen().getDesigner();
-        int freeAnimation = designer.get().values().stream().max(Comparator.comparingInt(AOAnimation::getId)).get().getId() + 1;
-        int freeImage = images.values().stream().max(Comparator.comparingInt(AOImage::getId)).get().getId() + 1;
+        int freeAnimation = designer.get().values().stream().max(Comparator.comparingInt(AOAnimation::getId)).map(AOAnimation::getId).orElse(0) + 1;
+        int freeImage = images.values().stream().max(Comparator.comparingInt(AOImage::getId)).map(AOImage::getId).orElse(0) + 1;
         return Math.max(freeAnimation, freeImage);
     }
 
