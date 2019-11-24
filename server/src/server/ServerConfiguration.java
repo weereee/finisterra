@@ -40,13 +40,14 @@ public class ServerConfiguration {
 
         // Default values of `Network.Api`
         Network.Api defApi = new Network.Api();
-        defApi.setapiURL("https://localhost");
+        defApi.setApiURL("https://localhost");
         defApi.setApiPort(1337);
         configOutput.getNetwork().setApi(defApi);
 
         // Default values for room creation
         configOutput.setRooms(new Rooms());
         configOutput.getRooms().setLimitCreation(1);
+        configOutput.getRooms().setMaxPlayers(10);
 
         return configOutput;
     }
@@ -55,7 +56,6 @@ public class ServerConfiguration {
         Json json = new AOJson();
         json.toJson(this, new FileHandle("Server.json"));
     }
-
 
     public Network getNetwork() {
         return network;
@@ -127,11 +127,11 @@ public class ServerConfiguration {
             private String apiURL;
             private int apiPort;
 
-            public String getapiURL() {
+            public String getApiURL() {
                 return this.apiURL;
             }
 
-            private void setapiURL(String apiURL) {
+            private void setApiURL(String apiURL) {
                 this.apiURL = apiURL;
             }
 

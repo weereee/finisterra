@@ -23,31 +23,36 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import server.network.ApiController;
 
 import static shared.util.MapHelper.CacheStrategy.NEVER_EXPIRE;
 
 public class Finisterra implements ApplicationListener {
 
-    private final int tcpPort;
-    private final int udpPort;
-    private boolean shouldUseLocalHost;
-    private Set<Server> servers = new HashSet<>();
-    private int lastPort;
-    private int limitRooms;
-    private int maxPlayers;
     private Lobby lobby;
     private World world;
     private ObjectManager objectManager;
     private SpellManager spellManager;
-    private HashMap<Integer, Map> maps = new HashMap<>();
-
+    private final HashMap<Integer, Map> maps = new HashMap<>();
+    public final ApiController apiClient;
+    
+    // Server configuration parameters got from Server.json
+    private final int tcpPort;
+    private final int udpPort;
+    private final boolean shouldUseLocalHost;
+    private int lastPort;
+    private final int limitRooms;
+    private final int maxPlayers;
+    private final Set<Server> servers = new HashSet<>();
+    
     public Finisterra(ServerConfiguration config) {
 
         /**
          * Fetch ports configuration from Server.json
          */
         ServerConfiguration.Network.Ports currentPorts = config.getNetwork().getPorts();
-
+        ServerConfiguration.Network.Api api = config.getNetwork().getApi();
+        
         this.tcpPort = currentPorts.getTcpPort();
         this.udpPort = currentPorts.getUdpPort();
         this.lastPort = currentPorts.getUdpPort();
@@ -55,6 +60,9 @@ public class Finisterra implements ApplicationListener {
 
         this.limitRooms = config.getRooms().getLimitCreation();
         this.maxPlayers = config.getRooms().getMaxPlayers();
+
+        this.apiClient = new ApiController(api.getApiURL(), api.getApiPort());
+        
     }
 
     @Override
